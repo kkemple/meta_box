@@ -128,24 +128,24 @@
 					<pre>
 						<code>
 $meta_box = array(
-	'id' => 'kmkslider_options',
+	'id' => 'kmk_slider_options',
 	'title' => 'Slider Options',
-	'page' => 'kmkslider',
+	'page' => 'kmk_slider',
 	'context' => 'advanced',
 	'priority' => 'high',
 	'fields' => array(
 		array(
-			'name' => 'kmktransition',
+			'name' => 'kmk_transition',
 			'display_name' => 'Transition',
 			'desc' => 'Slide or Fade',
-			'id' => 'kmkslider_transition',
+			'id' => 'kmk_slider_transition',
 			'type' => 'select',
 			'options' => array( 'Slide', 'Fade' )
 		)
 	)
 );
 
-new kmkMeta_Box( $meta_box );
+new kmk_Meta_Box( $meta_box );
 						</code>
 					</pre>
 					<p>
@@ -155,9 +155,9 @@ new kmkMeta_Box( $meta_box );
 					<p>
 						<h5>Now to break it down:</h5>
 						<ul>
-							<li>'id' => 'kmkslider_options' // this is the id your meta box will have in the admin so you can target it via css or js</li>
+							<li>'id' => 'kmk_slider_options' // this is the id your meta box will have in the admin so you can target it via css or js</li>
 							<li>'title' => 'Slider Options' // the title the meta box wil display in the admin panel</li>
-							<li>'page' => 'kmkslider' // The slug of the post type you want the meta box to show up on</li>
+							<li>'page' => 'kmk_slider' // The slug of the post type you want the meta box to show up on</li>
 							<li>'context' => 'advanced'	// where the box should appear on the page normal( the top ), advanded( below normal ), side( the sidebar area)</li>
 							<li>'priority' => 'high' // how important it is, in other words should it come before or after other boxes in its section</li>
 							<li>'fields' => array() // this is the containing array for the fields, it should be populated with arrays of the individual fields</li>
@@ -166,7 +166,7 @@ new kmkMeta_Box( $meta_box );
 					</p>
 					<p>
 						To access the meta data for your custom field all you have to do is:<br />
-						$meta = get_post_meta( $post->ID, 'kmktransition', true ); // you call it by the name you gave the field ( always prefix your field names so there are no issues with overwriting data!! )
+						$meta = get_post_meta( $post->ID, 'kmk_transition', true ); // you call it by the name you gave the field ( always prefix your field names so there are no issues with overwriting data!! )
 					</p>
 				</div>
 				<div class="section" id="examples">
@@ -177,7 +177,7 @@ new kmkMeta_Box( $meta_box );
 					<pre>
 						<code>
 array(
-	'name' => 'kmkduration', // field name
+	'name' => 'kmk_duration', // field name
 	'display_name' => 'Duration', // label text
 	'desc' => 'Seconds to pause, in milliseconds ( 3000 = 3s )', // description text
 	'id' => 'duration', // field id
@@ -190,10 +190,10 @@ array(
 					<pre>
 						<code>
 array(
-	'name' => 'kmkcaption', // field name
+	'name' => 'kmk_caption', // field name
 	'display_name' => 'Caption', // label text
 	'desc' => 'Some description', // description text
-	'id' => 'kmkcaption', // field id
+	'id' => 'kmk_caption', // field id
 	'type' => 'textarea', // the type of field it is
 	'std' => 'Your description here' // default value
 )
@@ -203,10 +203,10 @@ array(
 					<pre>
 						<code>
 array(
-	'name' => 'kmktransition', // field name
+	'name' => 'kmk_transition', // field name
 	'display_name' => 'Transition', // label text
 	'desc' => 'Slide or Fade', // description
-	'id' => 'kmkslider_transition', // field id
+	'id' => 'kmk_slider_transition', // field id
 	'type' => 'select', // the type of field it is
 	'options' => array( 'Slide', 'Fade' ) // select field options for the dropdown
 )
@@ -216,10 +216,10 @@ array(
 					<pre>
 						<code>
 array(
-	'name' => 'kmkusearrows', // field name
+	'name' => 'kmk_usearrows', // field name
 	'display_name' => 'Use Arrows', // label text
 	'desc' => 'Use Arrows for Navigation', // description
-	'id' => 'kmkusearrows', // field id
+	'id' => 'kmk_usearrows', // field id
 	'type' => 'checkbox', // the type of field it is
 )
 						</code>
@@ -228,7 +228,7 @@ array(
 					<pre>
 						<code>
 array(
-	'name' => 'kmktheme', // field name for radio group
+	'name' => 'kmk_theme', // field name for radio group
 	'display_name' => 'Theme', // label text
 	'type' => 'radio', // the type of field it is
 	'options' => array( // an array of options for the radio group
@@ -247,9 +247,9 @@ array(
 					<pre>
 						<code>
 array(
-	'name' => 'kmkslider_images', // name for the image(s) field(s)
+	'name' => 'kmk_slider_images', // name for the image(s) field(s)
 	'display_name' => 'Current Images', // Display name for the image(s)
-	'id' => 'kmkslider_images', // id for the images section wrapper
+	'id' => 'kmk_slider_images', // id for the images section wrapper
 	'type' => 'image', // the type of field it is
 	'allow_multiple' => true // should or shouldn't allow muiltiple uploads
 )
@@ -260,26 +260,26 @@ array(
 						<pre>
 							<code>
 include_once( 'Meta_Box.php' );
-function enqueue_kmkmeta_box_dependencies() {
+function enqueue_kmk_meta_box_dependencies() {
 	wp_enqueue_script( 'meta_box_js', get_template_directory() . '/js/meta_box.js', array( 'jquery' ), 1.0 );
 	wp_enqueue_script( 'jquery-ui-sortable' );
-	wp_enqueue_style( 'kmkmeta_box_css', get_template_directory() . '/css/meta_box.css', '', 1.0 );
+	wp_enqueue_style( 'kmk_meta_box_css', get_template_directory() . '/css/meta_box.css', '', 1.0 );
 }
 
-add_action( 'admin_enqueue_scripts', 'enqueue_kmkmeta_box_dependencies' );
+add_action( 'admin_enqueue_scripts', 'enqueue_kmk_meta_box_dependencies' );
 
 $meta_box = array(
-	'id' => 'kmkslider_options',
+	'id' => 'kmk_slider_options',
 	'title' => 'Love Cats?',
 	'page' => 'post',
 	'context' => 'advanced',
 	'priority' => 'high',
 	'fields' => array(
 		array(
-			'name' => 'kmklove_cats',
+			'name' => 'kmk_love_cats',
 			'display_name' => 'Do you love cats?',
 			'desc' => 'A simple yes or no should suffice.',
-			'id' => 'kmklove_cats',
+			'id' => 'kmk_love_cats',
 			'type' => 'select',
 			'options' => array( 'Yes', 'No' )
 		)
