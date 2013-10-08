@@ -1,0 +1,58 @@
+.pix-loading-animation {
+	float: right;
+	display: none;
+}
+
+.single-att {
+	position: relative;
+	margin: 0 10px 10px 0;
+	float: left;
+}
+
+.single-att img {
+	width: 150px;
+	height: 100px;
+}
+
+.pix-sortable:hover {
+	cursor: move;
+}
+
+.deletefile {
+	position: absolute;
+	top: -7px;
+	right: -7px;
+	display: block;
+	overflow: hidden;
+	text-indent: -9999px;
+	width: 16px;
+	height: 16px;
+	background: url( '../img/cross-circle.png' ) no-repeat center center;
+}
+
+.pix-meta-box-radio-wrapper {
+	float: left;
+	margin-right: 25px;
+	margin-bottom: 20px;
+}
+
+
+.pix-meta-box-radio-wrapper input[type="radio"] {
+	margin-right: 5px;
+}
+
+.pix-meta-box-radio-wrapper img {
+	vertical-align: middle;
+}
+
+.pix-sortable {
+	border-bottom: 1px solid #dfdfdf;
+	padding-top: 10px;
+	overflow: hidden;
+	*zoom: 1;
+}
+
+.pix-meta-upload-images-title {
+	margin-top: 30px;
+	margin-bottom: 0;
+}

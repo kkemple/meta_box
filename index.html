@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			* {
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				-ms-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+
+			body {
+				background: #ffffff;
+				color: #333;
+				min-height: 100%;
+				margin: 0;
+				padding: 0;
+				font-family: 'Helvetica', 'Arial', sans-serif;
+			}
+
+			h5 {
+				margin: 10px 0;
+			}
+
+			pre {
+				margin: 0;
+			}
+
+			code {
+				color: #e55d22;
+				font-weight: 600;
+			}
+
+			#wrapper {
+				overflow: hidden;
+				min-height: 100%;
+			}
+
+			.sidebar {
+				width:15%;
+				height: 100%;
+				position: fixed;
+				background: #444;
+				padding: 20px;
+				-webkit-transform:translateZ(0);
+			}
+
+				.sidebar nav ul {
+					margin: 0;
+					padding: 0;
+				}
+
+				.sidebar nav ul li {
+					list-style: none;
+					border-bottom: 2px dashed #fff;
+					padding: 10px 0 12px;
+				}
+
+				.sidebar nav ul li:first-child {
+					border-top: 2px dashed #fff;
+				}
+
+				.sidebar nav ul li a {
+					text-transform: uppercase;
+					color: #fff;
+					font-size: 14px;
+					font-weight: bold;
+					text-decoration: none;
+					display: block;
+					width: 100%;
+					height: 100%;
+					letter-spacing: 1px;
+				}
+
+			.main-content {
+				position: relative;
+				float: right;
+				width: 85%;
+				padding: 0 30px;
+				background: #fff;
+				height: 100%;
+				text-shadow: 0 1px #fff;
+			}
+
+				.main-content .section {
+					margin: 20px 0;
+					border: 1px solid #ccc;
+					padding: 20px;
+					background: #f4f4f4;
+					overflow-x: scroll;
+				}
+
+					.section h2 {
+						border-bottom: 1px solid #ccc;
+						padding-bottom: 10px;
+						margin-bottom: 20px;
+					}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div class="sidebar">
+				<nav>
+					<ul>
+						<li><a href="#description">Description</a></li>
+						<li><a href="#usage">Usage</a></li>
+						<li><a href="#examples">Examples</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="main-content">
+				<h1>Meta Box</h1>
+				<div class="section" id="description">
+					<h2>Description</h2>
+					<p>Meta Box class allows for the easy creation of meta boxes for any post type, it supports multiple or single image upload fields. It gives you the ability to quickly delete and sort images using ajax, and it supports images for radio button labels.</p>
+					<p>
+						Meta Box requires meta_box.css and meta_box.js to be enqueued and available in the admin section for proper functionality. The JS is also dependent on jQuery so make sure you specify that in the dependencies array of the enqueue function. (See the bottom of the page for an example of enqueueing the files.)
+					</p>
+					<p>
+						Meta Box is very simple to use, all you have to do is pass an array with your settings to the constructor function and you are done! i.e.<br/><br />new Meta_Box( $settings );
+					</p>
+				</div>
+				<div class="section" id="usage">
+					<h2>Usage</h2>
+					<p>Just include Meta_Box.php in your functions.php file or plugin file, and set up the dependencies and  the array of settings for your meta box. Once that is done you instantiate the class and you are done. A settings array contains all the info you need for the meta box. Here is a breakdown:
+					</p>
+					<h5>Full Settings Array with Instantiation </h5>
+					<pre>
+						<code>
+$meta_box = array(
+	'id' => 'kmkslider_options',
+	'title' => 'Slider Options',
+	'page' => 'kmkslider',
+	'context' => 'advanced',
+	'priority' => 'high',
+	'fields' => array(
+		array(
+			'name' => 'kmktransition',
+			'display_name' => 'Transition',
+			'desc' => 'Slide or Fade',
+			'id' => 'kmkslider_transition',
+			'type' => 'select',
+			'options' => array( 'Slide', 'Fade' )
+		)
+	)
+);
+
+new kmkMeta_Box( $meta_box );
+						</code>
+					</pre>
+					<p>
+						Just from looking at this you can see how easy it is to generate a meta box that would look like this:
+						<img src="meta-box-example-1.jpg" alt="" width="100%">
+					</p>
+					<p>
+						<h5>Now to break it down:</h5>
+						<ul>
+							<li>'id' => 'kmkslider_options' // this is the id your meta box will have in the admin so you can target it via css or js</li>
+							<li>'title' => 'Slider Options' // the title the meta box wil display in the admin panel</li>
+							<li>'page' => 'kmkslider' // The slug of the post type you want the meta box to show up on</li>
+							<li>'context' => 'advanced'	// where the box should appear on the page normal( the top ), advanded( below normal ), side( the sidebar area)</li>
+							<li>'priority' => 'high' // how important it is, in other words should it come before or after other boxes in its section</li>
+							<li>'fields' => array() // this is the containing array for the fields, it should be populated with arrays of the individual fields</li>
+						</ul>
+
+					</p>
+					<p>
+						To access the meta data for your custom field all you have to do is:<br />
+						$meta = get_post_meta( $post->ID, 'kmktransition', true ); // you call it by the name you gave the field ( always prefix your field names so there are no issues with overwriting data!! )
+					</p>
+				</div>
+				<div class="section" id="examples">
+					<h2>Examples</h2>
+					<p>Here are the options with examples for each field type:</p>
+
+					<h5>Text Field</h5>
+					<pre>
+						<code>
+array(
+	'name' => 'kmkduration', // field name
+	'display_name' => 'Duration', // label text
+	'desc' => 'Seconds to pause, in milliseconds ( 3000 = 3s )', // description text
+	'id' => 'duration', // field id
+	'type' => 'text', // the type of field it is
+	'std' => '3000' // default value
+)
+						</code>
+					</pre>
+					<h5>TextArea</h5>
+					<pre>
+						<code>
+array(
+	'name' => 'kmkcaption', // field name
+	'display_name' => 'Caption', // label text
+	'desc' => 'Some description', // description text
+	'id' => 'kmkcaption', // field id
+	'type' => 'textarea', // the type of field it is
+	'std' => 'Your description here' // default value
+)
+						</code>
+					</pre>
+					<h5>Select Field</h5>
+					<pre>
+						<code>
+array(
+	'name' => 'kmktransition', // field name
+	'display_name' => 'Transition', // label text
+	'desc' => 'Slide or Fade', // description
+	'id' => 'kmkslider_transition', // field id
+	'type' => 'select', // the type of field it is
+	'options' => array( 'Slide', 'Fade' ) // select field options for the dropdown
+)
+						</code>
+					</pre>
+					<h5>Checkbox Field</h5>
+					<pre>
+						<code>
+array(
+	'name' => 'kmkusearrows', // field name
+	'display_name' => 'Use Arrows', // label text
+	'desc' => 'Use Arrows for Navigation', // description
+	'id' => 'kmkusearrows', // field id
+	'type' => 'checkbox', // the type of field it is
+)
+						</code>
+					</pre>
+					<h5>Radio Field</h5>
+					<pre>
+						<code>
+array(
+	'name' => 'kmktheme', // field name for radio group
+	'display_name' => 'Theme', // label text
+	'type' => 'radio', // the type of field it is
+	'options' => array( // an array of options for the radio group
+		array(
+			'value' => 'default', // value for the radio button option
+			// if radio button has image label
+			'has_image' => true, // let the code know to expect an image
+			'image_url' => SOME_PATH . 'img/default-theme-preview.jpg' // give it a file path
+			// if radio button does not have image label
+			'display_name' => 'Default Theme' // if no image give it a label
+		)
+)
+						</code>
+					</pre>
+					<h5>Image Field</h5>
+					<pre>
+						<code>
+array(
+	'name' => 'kmkslider_images', // name for the image(s) field(s)
+	'display_name' => 'Current Images', // Display name for the image(s)
+	'id' => 'kmkslider_images', // id for the images section wrapper
+	'type' => 'image', // the type of field it is
+	'allow_multiple' => true // should or shouldn't allow muiltiple uploads
+)
+						</code>
+					</pre>
+					<p>
+						Here is copy and paste code if you plan to use Meta Box in your functions.php file:
+						<pre>
+							<code>
+include_once( 'Meta_Box.php' );
+function enqueue_kmkmeta_box_dependencies() {
+	wp_enqueue_script( 'meta_box_js', get_template_directory() . '/js/meta_box.js', array( 'jquery' ), 1.0 );
+	wp_enqueue_script( 'jquery-ui-sortable' );
+	wp_enqueue_style( 'kmkmeta_box_css', get_template_directory() . '/css/meta_box.css', '', 1.0 );
+}
+
+add_action( 'admin_enqueue_scripts', 'enqueue_kmkmeta_box_dependencies' );
+
+$meta_box = array(
+	'id' => 'kmkslider_options',
+	'title' => 'Love Cats?',
+	'page' => 'post',
+	'context' => 'advanced',
+	'priority' => 'high',
+	'fields' => array(
+		array(
+			'name' => 'kmklove_cats',
+			'display_name' => 'Do you love cats?',
+			'desc' => 'A simple yes or no should suffice.',
+			'id' => 'kmklove_cats',
+			'type' => 'select',
+			'options' => array( 'Yes', 'No' )
+		)
+	)
+);
+
+new Meta_Box( $meta_box );
+							</code>
+						</pre>
+						You are now ready to add meta boxes to your post types! Enjoy!
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
